@@ -66,8 +66,8 @@ public:
     {
         table->setWindowTitle(QApplication::translate("table", "Form", nullptr));
         label->setText(QApplication::translate("table", "UserS \346\225\260\346\215\256\345\272\223\344\270\255\347\232\204\346\225\260\346\215\256", nullptr));
-        pushButton->setText(QApplication::translate("table", "PushButton", nullptr));
-        pushButton_2->setText(QApplication::translate("table", "PushButton", nullptr));
+        pushButton->setText(QApplication::translate("table", "delete", nullptr));
+        pushButton_2->setText(QApplication::translate("table", "add", nullptr));
         label_2->setText(QApplication::translate("table", "UserU \346\225\260\346\215\256\345\272\223\344\270\255\347\232\204\346\225\260\346\215\256", nullptr));
         Bnext->setText(QApplication::translate("table", "\344\270\213\344\270\200\351\241\265", nullptr));
     } // retranslateUi

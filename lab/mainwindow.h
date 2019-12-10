@@ -23,9 +23,11 @@ private slots:
     void on_Blogin_clicked();
 private:
     Ui::MainWindow *ui;
-    QString user1 = "UserS";
-    QString pass1 = "UserS";
-    QString security = "High";
+    QString user1 = "UserU";
+    QString pass1 = "UserU";
+    QString user2 = "UserS";
+    QString pass2 = "UserS";
+    QString security;
     table * page1;
     combined * page2;
 };

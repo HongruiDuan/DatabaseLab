@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    //在mainwindow被析构的时候将修改了的数据写入到数据库中
     delete ui;
 }
 void MainWindow::setdata(QSqlDatabase *db1, QSqlDatabase *db2){
@@ -25,21 +26,29 @@ void MainWindow::on_Blogin_clicked()
     QString username = ui->Laccount->text();
     QString password = ui->Lpassword->text();
     //登录验证
-//    if(username == user1 && password == pass1){
-//        this->hide();
-//        page1->setdata(dbh,dbl);
-//        page1->show();
-//    }
-//    else{
-//        ui->Lpassword->clear();
-//    }
-      this->hide();
+    if(username == user1 && password == pass1){
+        this->hide();
+        page1 = new table;
+        page1->setdata(dbh,dbl);
+        page1->show();
+    }
+    else if(username == user2 && password == pass2){
+        this->hide();
+        page2 = new combined;
+        page2->setdata(dbh,dbl);
+        page2->show();
+    }
+    else{
+        ui->Lpassword->clear();
+
+    }
+
 // 分别显示两个数据库的数据
 //      page1 = new table;
 //      page1->setdata(dbh,dbl);
 //      page1->show();
-        page2 = new combined;
-        page2->setdata(dbh,dbl);
-        page2->show();
+
+//        page2->setdata(dbh,dbl);
+//        page2->show();
 
 }

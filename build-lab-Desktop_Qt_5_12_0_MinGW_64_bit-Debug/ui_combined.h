@@ -35,19 +35,19 @@ public:
         combined->resize(619, 406);
         tableWidget = new QTableWidget(combined);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(20, 60, 461, 291));
+        tableWidget->setGeometry(QRect(20, 60, 421, 291));
         label = new QLabel(combined);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(30, 20, 121, 16));
         Badd = new QPushButton(combined);
         Badd->setObjectName(QString::fromUtf8("Badd"));
-        Badd->setGeometry(QRect(500, 90, 93, 28));
+        Badd->setGeometry(QRect(470, 90, 93, 28));
         Bdelete = new QPushButton(combined);
         Bdelete->setObjectName(QString::fromUtf8("Bdelete"));
-        Bdelete->setGeometry(QRect(500, 190, 93, 28));
+        Bdelete->setGeometry(QRect(470, 190, 93, 28));
         Bnext = new QPushButton(combined);
         Bnext->setObjectName(QString::fromUtf8("Bnext"));
-        Bnext->setGeometry(QRect(500, 300, 93, 28));
+        Bnext->setGeometry(QRect(470, 300, 93, 28));
 
         retranslateUi(combined);
 
@@ -60,7 +60,7 @@ public:
         label->setText(QApplication::translate("combined", "\345\220\210\345\271\266\344\271\213\345\220\216\347\232\204\346\225\260\346\215\256\345\272\223", nullptr));
         Badd->setText(QApplication::translate("combined", "add", nullptr));
         Bdelete->setText(QApplication::translate("combined", "delete", nullptr));
-        Bnext->setText(QApplication::translate("combined", "next", nullptr));
+        Bnext->setText(QApplication::translate("combined", "commit", nullptr));
     } // retranslateUi
 
 };

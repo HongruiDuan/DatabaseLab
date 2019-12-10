@@ -4,7 +4,7 @@
 #include "QSql"
 #include <QWidget>
 #include "QVector"
-
+#include "QTableWidgetItem"
 namespace Ui {
 class combined;
 class Col;
@@ -53,6 +53,8 @@ private slots:
     void on_Badd_clicked();
 
     void on_Bdelete_clicked();
+
+    void on_tableWidget_itemDoubleClicked(QTableWidgetItem *item);
 
 private:
     QVector<Col> cols;
