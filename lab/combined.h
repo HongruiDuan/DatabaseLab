@@ -30,6 +30,12 @@ public:
             this->TC_D = "";
             this->TC = "";
     }
+    void replaceO(QString obj){
+        this->objective = obj;
+    }
+    void replaceD(QString des){
+        this->destination = des;
+    }
     QString starship;
     QString TC_S;
     QString objective;
@@ -55,6 +61,8 @@ private slots:
     void on_Bdelete_clicked();
 
     void on_tableWidget_itemDoubleClicked(QTableWidgetItem *item);
+
+    void on_Bselect_clicked();
 
 private:
     QVector<Col> cols;

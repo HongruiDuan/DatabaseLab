@@ -12,7 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
@@ -23,10 +23,11 @@ class Ui_combined
 {
 public:
     QTableWidget *tableWidget;
-    QLabel *label;
     QPushButton *Badd;
     QPushButton *Bdelete;
     QPushButton *Bnext;
+    QLineEdit *lselect;
+    QPushButton *Bselect;
 
     void setupUi(QWidget *combined)
     {
@@ -35,19 +36,22 @@ public:
         combined->resize(619, 406);
         tableWidget = new QTableWidget(combined);
         tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(20, 60, 421, 291));
-        label = new QLabel(combined);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(30, 20, 121, 16));
+        tableWidget->setGeometry(QRect(20, 80, 421, 291));
         Badd = new QPushButton(combined);
         Badd->setObjectName(QString::fromUtf8("Badd"));
-        Badd->setGeometry(QRect(470, 90, 93, 28));
+        Badd->setGeometry(QRect(480, 110, 93, 28));
         Bdelete = new QPushButton(combined);
         Bdelete->setObjectName(QString::fromUtf8("Bdelete"));
-        Bdelete->setGeometry(QRect(470, 190, 93, 28));
+        Bdelete->setGeometry(QRect(480, 210, 93, 28));
         Bnext = new QPushButton(combined);
         Bnext->setObjectName(QString::fromUtf8("Bnext"));
-        Bnext->setGeometry(QRect(470, 300, 93, 28));
+        Bnext->setGeometry(QRect(480, 320, 93, 28));
+        lselect = new QLineEdit(combined);
+        lselect->setObjectName(QString::fromUtf8("lselect"));
+        lselect->setGeometry(QRect(20, 30, 421, 21));
+        Bselect = new QPushButton(combined);
+        Bselect->setObjectName(QString::fromUtf8("Bselect"));
+        Bselect->setGeometry(QRect(480, 30, 93, 28));
 
         retranslateUi(combined);
 
@@ -57,10 +61,10 @@ public:
     void retranslateUi(QWidget *combined)
     {
         combined->setWindowTitle(QApplication::translate("combined", "Form", nullptr));
-        label->setText(QApplication::translate("combined", "\345\220\210\345\271\266\344\271\213\345\220\216\347\232\204\346\225\260\346\215\256\345\272\223", nullptr));
         Badd->setText(QApplication::translate("combined", "add", nullptr));
         Bdelete->setText(QApplication::translate("combined", "delete", nullptr));
         Bnext->setText(QApplication::translate("combined", "commit", nullptr));
+        Bselect->setText(QApplication::translate("combined", "select", nullptr));
     } // retranslateUi
 
 };
