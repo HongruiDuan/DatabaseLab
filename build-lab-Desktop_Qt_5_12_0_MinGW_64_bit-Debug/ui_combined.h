@@ -36,13 +36,13 @@ public:
         combined->resize(871, 406);
         Badd = new QPushButton(combined);
         Badd->setObjectName(QString::fromUtf8("Badd"));
-        Badd->setGeometry(QRect(740, 110, 93, 28));
+        Badd->setGeometry(QRect(740, 130, 93, 28));
         Bdelete = new QPushButton(combined);
         Bdelete->setObjectName(QString::fromUtf8("Bdelete"));
-        Bdelete->setGeometry(QRect(740, 210, 93, 28));
+        Bdelete->setGeometry(QRect(740, 310, 93, 28));
         Bnext = new QPushButton(combined);
         Bnext->setObjectName(QString::fromUtf8("Bnext"));
-        Bnext->setGeometry(QRect(740, 320, 93, 28));
+        Bnext->setGeometry(QRect(740, 210, 93, 28));
         lselect = new QLineEdit(combined);
         lselect->setObjectName(QString::fromUtf8("lselect"));
         lselect->setGeometry(QRect(20, 30, 671, 21));

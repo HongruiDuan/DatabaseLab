@@ -35,6 +35,8 @@ void combined::readdata(){
     queryL.exec(str);
     QString starship,C1,objective,C2,destination,C3;
 //获取初始 Rs = 所有安全级比他低的用户的D 并集
+    //清空Qvector
+    QVector<Col> temp;
     while(queryH.next()){
        starship = queryH.value(0).toString();
        C1 = queryH.value(1).toString();
@@ -44,7 +46,7 @@ void combined::readdata(){
        C3 = queryH.value(5).toString();
        qDebug()<<starship+" "<<C1+" "<<objective+" "<<C2+" "<<destination+" "<<C3;
        //元组安全级为每个元组
-       this->cols.append(Col(starship,C1,objective,C2,destination,C3,QString('S')));
+       temp.append(Col(starship,C1,objective,C2,destination,C3,QString('S')));
     }
     while(queryL.next()){
         starship = queryL.value(0).toString();
@@ -53,9 +55,10 @@ void combined::readdata(){
         C2 = queryL.value(3).toString();
         destination  = queryL.value(4).toString();
         C3 = queryL.value(5).toString();
-       this->cols.append(Col(starship,C1,objective,C2,destination,C3,QString('U')));
+       temp.append(Col(starship,C1,objective,C2,destination,C3,QString('U')));
     }
 //将c初始之后的Rs打印出来
+    this->cols =temp;
     qDebug()<<"初始的Rs";
     for(int i =0;i<this->cols.size();i++){
        qDebug()<<cols[i].starship+" "<<cols[i].TC_D+" "<<cols[i].objective+" "<<cols[i].TC_O+" "<<cols[i].destination+" "<<cols[i].TC_D;
@@ -137,9 +140,9 @@ void combined::readdata(){
 //            ui->tableWidget->setItem(i,2,new QTableWidgetItem(cols.at(i).destination));
 //     }
     QString sql_del = QString("drop table RS");
-    queryH.exec("sql_del");
+    qDebug()<<"删除RS表状态"<<queryH.exec(sql_del);
     QString sql_crea=QString("create table RS(Starship varchar(20),C1 varchar(20),Objective varchar(20),C2 varchar(20),Destination varchar(20),C3 varchar(20), primary key(Starship,C1,C2,C3))");
-    qDebug()<<queryH.exec(sql_crea);
+    qDebug()<<"创建RS表状态"<<queryH.exec(sql_crea);
     for(int i=0;i<cols.size();i++){
         QString sql_ins = QString("insert into RS values('%1','%2','%3','%4','%5','%6')").arg(
                     cols[i].starship,cols[i].TC_S,cols[i].objective,cols[i].TC_O,cols[i].destination,cols[i].TC_D);
@@ -164,7 +167,7 @@ void combined:: closeEvent(QCloseEvent *evevt){
     //结束时删除虚表
     QString sql_select = "drop table RS";
     QSqlQuery queryH(*this->dbh);
-    sql_select.replace("SOD","RS");
+//    sql_select.replace("SOD","RS");
     qDebug()<<"删除表"<<queryH.exec(sql_select);
 }
 
@@ -177,37 +180,70 @@ combined::~combined()
 //高安全级用户插入增加一条记录，直接向高安全级数据库实例中插入一条数据insert into SOD values(buying,Spying,Mars)
 void combined::on_Badd_clicked()
 {
+        int rowcount = model->rowCount();
+        model->insertRow(rowcount);
+        // 插入元组的各个属性值，未赋值默认为null
 
-    QSqlQuery queryH(*this->dbh);
-    queryH.prepare("insert into SOD values(?,?,?,?,?,?)");
-    queryH.bindValue(0,"buying");
-    queryH.bindValue(1,"S");
-    queryH.bindValue(2,"Spying");
-    queryH.bindValue(3,"S");
-    queryH.bindValue(4,"Mars");
-    queryH.bindValue(5,"S");
-    queryH.exec();
-
-    readdata();
+//        return true;
 }
+
+void combined::on_Bnext_clicked()
+{
+    QString S = model->index(row,0).data().toString();  // 插入元组的主键，不能为空
+    QString O = model->index(row,2).data().toString();
+    QString D = model->index(row,4).data().toString();
+    bool flag= true;
+    //遍历RS中所有元组是否有重复的
+    for(int i = 0; i < cols.size(); i++){
+        if(cols.at(i).starship == S
+                && cols.at(i).TC_S == SecurityLevel
+                && cols.at(i).TC_O == SecurityLevel && cols.at(i).TC_D == SecurityLevel)
+        {
+            flag=false;
+        }
+//                return false;
+            qDebug() << "ERROR:  主键重复,插入失败";
+    }
+    if(flag){
+        //这个地方%写反了
+        QString sql = QString("insert into SOD values('%1', '%2', '%3', '%4', '%5', '%6')").arg(S, SecurityLevel, O, SecurityLevel, D, SecurityLevel);
+        if(SecurityLevel == "S"){ // 对高安全级实例插入
+            QSqlQuery queryH(*this->dbh);
+            qDebug()<<"S插入状态"<<queryH.exec(sql);
+        }
+        if(SecurityLevel == "U"){ // 对低安全级实例插入
+            QSqlQuery queryL(*this->dbl);
+            qDebug()<<"U插入状态"<<queryL.exec(sql);
+        }
+        readdata();
+    }
+
+}
+
 
 //高安全级用户删除一条记录
 void combined::on_Bdelete_clicked()
 {
     // 如果每次只删除一个元组
     // 待删除元组下标
-    int i = model->rowCount();
+    int i = this->row;
+    qDebug()<<"delete NO."<<i;
     if(cols.at(i).TC == SecurityLevel){
         // 删除元组判断，匹配主键（主关键字及其安全级，其他属性的安全级集合）
-        QString sql = QString("delete from SOD where starship = ? and c1 = ? and c2 = ? and c3 = ?")
-                .arg(cols.at(i).starship, cols.at(i).TC_S, cols.at(i).TC_O, cols.at(i).TC_D);
+        QString sql = QString("delete from SOD where Starship = '%1' and C1 = '%2' and C2 = '%3' and C3 = '%4'")
+                .arg(model->index(i,0).data().toString(),
+                     model->index(i,1).data().toString(),
+                     model->index(i,3).data().toString(),
+                     model->index(i,5).data().toString());
+//        sql.replace('\'',"\"");
+        qDebug()<<"delete sql"<<sql;
         if(SecurityLevel == "S"){
             QSqlQuery queryH(*this->dbh);
-            queryH.exec(sql);
+            qDebug()<<"delete S status:"<<queryH.exec(sql);
         }
         if(SecurityLevel == "U"){
             QSqlQuery queryL(*this->dbl);
-            queryL.exec(sql);
+            qDebug()<<"delete L status:"<<queryL.exec(sql);
         }
     }else{
         qDebug() << "ERROR: 不允许删除低安全级实例的数据";
@@ -374,10 +410,8 @@ void combined::on_Bselect_clicked()
         qDebug()<<"str_sel:"<<str_sel <<"str_where:"<<str_where <<"str_order:"<<str_order;
         str_where=str_where.trimmed();
         qDebug()<<str_where;
-
         model->setFilter(str_where);
         Tsort(str_order);
-
         ui->tableView->setModel(model);
         for(int i=0;i<6;i++){
           ui->tableView->setColumnHidden(i,true);
@@ -402,3 +436,11 @@ void combined::on_tableView_doubleClicked(const QModelIndex &index)
    //    QString  data=item->data(row).toString();
    //    qDebug()<<data;
 }
+
+void combined::on_tableView_clicked(const QModelIndex &index)
+{
+    qDebug()<<"table_clicked()"<<index.row();
+    this->row=index.row();
+}
+
+

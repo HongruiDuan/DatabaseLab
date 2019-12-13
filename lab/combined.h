@@ -68,6 +68,10 @@ private slots:
     void on_Bselect_clicked();
     void on_tableView_doubleClicked(const QModelIndex &index);
 
+    void on_tableView_clicked(const QModelIndex &index);
+
+    void on_Bnext_clicked();
+
 protected:
     void closeEvent(QCloseEvent *evevt);
 private:
@@ -77,6 +81,8 @@ private:
     QSqlDatabase * dbh;
     QSqlDatabase * dbl;
     QString SecurityLevel;
+    int row;
+    int column;//单击tableview时更改
 };
 
 #endif // COMBINED_H
