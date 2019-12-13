@@ -14,7 +14,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,36 +22,36 @@ QT_BEGIN_NAMESPACE
 class Ui_combined
 {
 public:
-    QTableWidget *tableWidget;
     QPushButton *Badd;
     QPushButton *Bdelete;
     QPushButton *Bnext;
     QLineEdit *lselect;
     QPushButton *Bselect;
+    QTableView *tableView;
 
     void setupUi(QWidget *combined)
     {
         if (combined->objectName().isEmpty())
             combined->setObjectName(QString::fromUtf8("combined"));
-        combined->resize(619, 406);
-        tableWidget = new QTableWidget(combined);
-        tableWidget->setObjectName(QString::fromUtf8("tableWidget"));
-        tableWidget->setGeometry(QRect(20, 80, 421, 291));
+        combined->resize(871, 406);
         Badd = new QPushButton(combined);
         Badd->setObjectName(QString::fromUtf8("Badd"));
-        Badd->setGeometry(QRect(480, 110, 93, 28));
+        Badd->setGeometry(QRect(740, 110, 93, 28));
         Bdelete = new QPushButton(combined);
         Bdelete->setObjectName(QString::fromUtf8("Bdelete"));
-        Bdelete->setGeometry(QRect(480, 210, 93, 28));
+        Bdelete->setGeometry(QRect(740, 210, 93, 28));
         Bnext = new QPushButton(combined);
         Bnext->setObjectName(QString::fromUtf8("Bnext"));
-        Bnext->setGeometry(QRect(480, 320, 93, 28));
+        Bnext->setGeometry(QRect(740, 320, 93, 28));
         lselect = new QLineEdit(combined);
         lselect->setObjectName(QString::fromUtf8("lselect"));
-        lselect->setGeometry(QRect(20, 30, 421, 21));
+        lselect->setGeometry(QRect(20, 30, 671, 21));
         Bselect = new QPushButton(combined);
         Bselect->setObjectName(QString::fromUtf8("Bselect"));
-        Bselect->setGeometry(QRect(480, 30, 93, 28));
+        Bselect->setGeometry(QRect(740, 30, 93, 28));
+        tableView = new QTableView(combined);
+        tableView->setObjectName(QString::fromUtf8("tableView"));
+        tableView->setGeometry(QRect(20, 60, 681, 311));
 
         retranslateUi(combined);
 

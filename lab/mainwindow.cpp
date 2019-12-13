@@ -29,13 +29,13 @@ void MainWindow::on_Blogin_clicked()
     if(username == user1 && password == pass1){
         this->hide();
         page1 = new table;
-        page1->setdata(dbh,dbl);
+        page1->setdata(dbh,dbl,"S");
         page1->show();
     }
     else if(username == user2 && password == pass2){
         this->hide();
         page2 = new combined;
-        page2->setdata(dbh,dbl);
+        page2->setdata(dbh,dbl,"S");
         page2->show();
     }
     else{

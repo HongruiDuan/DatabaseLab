@@ -13,7 +13,7 @@ table::table(QWidget *parent) :
 
 }
 
-void table::setdata(QSqlDatabase *db1, QSqlDatabase *db2){
+void table::setdata(QSqlDatabase *db1, QSqlDatabase *db2,QString sercuritylevel){
     this->dbh=db1;
     this->dbl=db2;
 
@@ -48,4 +48,9 @@ void table::on_Bnext_clicked()
 //    page2->setdata(dbh,dbl);
 //    this->hide();
 //    page2->show();
+}
+
+void table::on_tableView_doubleClicked(const QModelIndex &index)
+{
+
 }

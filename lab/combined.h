@@ -5,6 +5,7 @@
 #include <QWidget>
 #include "QVector"
 #include "QTableWidgetItem"
+#include "QSqlTableModel"
 namespace Ui {
 class combined;
 class Col;
@@ -51,8 +52,10 @@ class combined : public QWidget
 
 public:
     explicit combined(QWidget *parent = nullptr);
-    void setdata(QSqlDatabase *db1,QSqlDatabase *db2);
+    void setdata(QSqlDatabase *db1,QSqlDatabase *db2,QString sercurity);
     void readdata();
+    void Tshow(QString sel);
+    void Tsort(QString order);
     ~combined();
 
 private slots:
@@ -63,12 +66,17 @@ private slots:
     void on_tableWidget_itemDoubleClicked(QTableWidgetItem *item);
 
     void on_Bselect_clicked();
+    void on_tableView_doubleClicked(const QModelIndex &index);
 
+protected:
+    void closeEvent(QCloseEvent *evevt);
 private:
+    QSqlTableModel *model;
     QVector<Col> cols;
     Ui::combined *ui;
     QSqlDatabase * dbh;
     QSqlDatabase * dbl;
+    QString SecurityLevel;
 };
 
 #endif // COMBINED_H
